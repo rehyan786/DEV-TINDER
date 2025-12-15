@@ -1,25 +1,31 @@
+
+
 const express = require("express");
 const app = express();
-const connectDB = require("./config/database.js");
+const connectDB = require("./config/Database.js");
 
 const UserModel = require("./models/userSchema.js");
 
 // Add middleware to parse JSON
-app.use(express.json());
+app.use(express.json()); 
 
 app.get("/", (req, res) => {
     res.send("Hello from the server hi ");
 });
 
 // Fixed route with "/" and proper string values
+
 app.post("/Signup", async (req, res) => {
+    console.log("REQ BODY:", req.body);
+    const user = new UserModel(req.body);  
     try {
-        const user = new UserModel({
-            FirstName: "lol",
-            LastName: "Rehyan",
-            Email: "mdafa@example.com",
-            Password: "helloguys"
-        });
+    
+        // const user = new UserModel({
+        //     FirstName: "lol",
+        //     LastName: "Rehyan",
+        //     Email: "mdafa@example.com",
+        //     Password: "helloguys"
+        // });
         
         await user.save();
         res.send("user added successfullyyyy");

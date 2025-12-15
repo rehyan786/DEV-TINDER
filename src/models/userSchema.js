@@ -8,8 +8,12 @@ const userSchema=mongoose.Schema({
     LastName:{
         type: String
     },
-      Age:{
-            type: Number
+      Email:{
+            type: String
+
+        },
+        Password:{
+            type: String
         }
 });
 
