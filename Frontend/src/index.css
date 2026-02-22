@@ -12,6 +12,9 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@import "tailwindcss";
+@plugin "daisyui";
+
 
 a {
   font-weight: 500;
