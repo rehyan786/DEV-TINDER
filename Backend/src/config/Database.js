@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
-    try {
-        await mongoose.connect(
-            "mongodb+srv://mdrehyana1380_db_user:yz0lC3PPPVSvyeJ6@dev-tinder.ok7sfc5.mongodb.net/devtinder"
-        );
-        console.log("CONNECTED TO:", mongoose.connection.name);   // <--- ADD THIS
-    } catch (error) {
-        console.log("DB CONNECTION ERROR:", error.message);
-    }
+  const uri = process.env.MONGO_URI || process.env.MONGODB_URI;
+
+  if (!uri) {
+    throw new Error(
+      "MONGO_URI is missing. Add it to Backend/.env (see .env.example)."
+    );
+  }
+
+  await mongoose.connect(uri);
+  console.log("CONNECTED TO:", mongoose.connection.name);
 };
 
 module.exports = connectDB;

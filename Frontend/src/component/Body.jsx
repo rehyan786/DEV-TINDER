@@ -4,9 +4,11 @@ import Navbar from './Navbar'
 
 const Body = () => {
   return (<>
+   <div className="bg-red-300 h-full left-0.5">
      <Navbar />
-    <div>Body</div>
+    {/* <div>Body</div> */}
     <Outlet/>
+    </div>
     </>
   )
 }

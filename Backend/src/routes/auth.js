@@ -74,7 +74,7 @@ authRouter.post("/login", async (req, res) => {
                 maxAge: 24 * 60 * 60 * 1000 // 1 day
             });
             
-            res.send("Login successful");
+            res.send(user);
         } else {
             res.status(401).send("Invalid credentials");
         }

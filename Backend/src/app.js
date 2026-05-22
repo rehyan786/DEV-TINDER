@@ -1,3 +1,8 @@
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, "../.env") });
+
+
+const cors=require("cors");
 const express = require("express");
 const app = express();
 const bcrypt = require("bcrypt");
@@ -10,6 +15,7 @@ const { userAuth } = require("./middlewares/auth.js");
 
 
 
+
 const {authRouter}= require("./routes/auth.js");
 const {profileRouter}= require("./routes/profile.js");
 const {requestRouter}= require("./routes/requests.js");
@@ -19,14 +25,11 @@ const { userRouter } = require("./routes/user.js");
 
 
 // Add middleware to parse JSON
+app.use(cors( {origin: "http://localhost:5173", credentials: true}));
 app.use(express.json()); 
 app.use(cookieParser()); 
 
 
-app.use("/",authRouter);
-app.use("/",profileRouter);
-app.use("/",requestRouter);
-app.use("/",userRouter);
 
 
 app.get("/", (req, res) => {
@@ -123,13 +126,20 @@ app.delete("/user/:userId", async (req, res) => {
 });
 
 connectDB()
-    .then(() => {
-        console.log("Database connected");
-        app.listen(5000, () => {
-            console.log("Server is running on port 5000");
-        });
-    })
-    .catch((err) => {
-        console.error("Database connection error:", err);
+  .then(() => {
+    console.log("Database connected");
+
+    app.use("/", authRouter);
+    app.use("/", profileRouter);
+    app.use("/", requestRouter);
+    app.use("/", userRouter);
+
+    app.listen(5000, () => {
+      console.log("Server is running on port 5000");
     });
+  })
+  .catch((err) => {
+    console.error("Database connection failed:", err.message);
+    process.exit(1);
+  });
 
